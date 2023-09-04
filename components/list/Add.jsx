@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   Dialog,
@@ -12,26 +12,26 @@ import {
   FormControl,
   InputLabel,
   FormHelperText,
-} from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
-import { useSnackbar } from "notistack";
-import { useState, useEffect } from "react";
+} from '@mui/material'
+import { useForm, Controller } from 'react-hook-form'
+import { useSnackbar } from 'notistack'
+import { useState, useEffect } from 'react'
 
 const AddDialog = (props) => {
-  const { onClose, open, editType, defaultValues } = props;
-  const dialogTitle = editType === "edit" ? "Edit product" : "Add a product";
-  
-  const { enqueueSnackbar } = useSnackbar();
+  const { onClose, open, editType, defaultValues } = props
+  const dialogTitle = editType === 'edit' ? 'Edit product' : 'Add a product'
+
+  const { enqueueSnackbar } = useSnackbar()
   const {
     handleSubmit,
     reset,
     control,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm()
 
   useEffect(() => {
-    if (editType === "edit") {
+    if (editType === 'edit') {
       setValue('name', defaultValues.name)
       setValue('type', defaultValues.type)
       setValue('count', defaultValues.count)
@@ -42,56 +42,55 @@ const AddDialog = (props) => {
       setValue('count', '')
       setValue('price', '')
     }
-  }, [editType, defaultValues, setValue]);
+  }, [editType, defaultValues, setValue])
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(data)
     const addGood = async () => {
       const response = await fetch(`/api/list/add`, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify(data),
-      });
-      if (response.ok) {
-        enqueueSnackbar("success", {
-          variant: "success",
-          autoHideDuration: 3000,
-        });
-        handleClose();
-      } else {
-        enqueueSnackbar("failed", { variant: "info", autoHideDuration: 3000 });
-      }
-    };
-    const updateGood = async (id)=>{
-      const response = await fetch(`api/list`, {
-        method: 'PATCH',
-        body: JSON.stringify({...data, id})
       })
       if (response.ok) {
-        enqueueSnackbar("success", {
-          variant: "success",
+        enqueueSnackbar('success', {
+          variant: 'success',
           autoHideDuration: 3000,
-        });
-        handleClose();
+        })
+        handleClose()
       } else {
-        enqueueSnackbar("failed", { variant: "info", autoHideDuration: 3000 });
+        enqueueSnackbar('failed', { variant: 'info', autoHideDuration: 3000 })
       }
     }
-    if(editType === 'edit'){
-      const id = defaultValues.id;
-      updateGood(id);
-    }else {
-      addGood();
+    const updateGood = async (id) => {
+      const response = await fetch(`api/list`, {
+        method: 'PATCH',
+        body: JSON.stringify({ ...data, id }),
+      })
+      if (response.ok) {
+        enqueueSnackbar('success', {
+          variant: 'success',
+          autoHideDuration: 3000,
+        })
+        handleClose()
+      } else {
+        enqueueSnackbar('failed', { variant: 'info', autoHideDuration: 3000 })
+      }
     }
-    
-  };
+    if (editType === 'edit') {
+      const id = defaultValues.id
+      updateGood(id)
+    } else {
+      addGood()
+    }
+  }
 
   const handleClose = (event, reason) => {
-    if (reason === "backdropClick") {
-      return;
+    if (reason === 'backdropClick') {
+      return
     }
-    reset();
-    onClose();
-  };
+    reset()
+    onClose()
+  }
   return (
     <Dialog onClose={handleClose} open={open}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -100,9 +99,9 @@ const AddDialog = (props) => {
           <Controller
             name="name"
             control={control}
-            rules={{ required: "请输入名称" }}
-            defaultValue=''
-            render={({ field: {onChange, onBlur, value} }) => {
+            rules={{ required: '请输入名称' }}
+            defaultValue=""
+            render={({ field: { onChange, onBlur, value } }) => {
               return (
                 <TextField
                   label="名称"
@@ -114,15 +113,15 @@ const AddDialog = (props) => {
                   onChange={onChange}
                   value={value}
                 />
-              );
+              )
             }}
           />
 
           <Controller
             name="type"
             control={control}
-            rules={{ required: "请选择类型" }}
-            defaultValue=''
+            rules={{ required: '请选择类型' }}
+            defaultValue=""
             render={({ field }) => (
               <FormControl fullWidth className="mb-4" error={!!errors.type}>
                 <InputLabel id="demo-id">类型</InputLabel>
@@ -139,8 +138,8 @@ const AddDialog = (props) => {
           <Controller
             name="price"
             control={control}
-            rules={{ required: "请输入价格" }}
-            defaultValue=''
+            rules={{ required: '请输入价格' }}
+            defaultValue=""
             render={({ field }) => (
               <TextField
                 label="价格"
@@ -155,8 +154,8 @@ const AddDialog = (props) => {
           <Controller
             name="count"
             control={control}
-            rules={{ required: "请输入数量" }}
-            defaultValue=''
+            rules={{ required: '请输入数量' }}
+            defaultValue=""
             render={({ field }) => (
               <TextField
                 label="数量"
@@ -174,7 +173,7 @@ const AddDialog = (props) => {
         </DialogActions>
       </form>
     </Dialog>
-  );
-};
+  )
+}
 
-export default AddDialog;
+export default AddDialog

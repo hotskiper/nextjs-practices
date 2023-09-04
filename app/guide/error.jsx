@@ -1,6 +1,6 @@
 'use client'
 const err = () => {
-    return <div>console.error</div>
+  return <div>console.error</div>
 }
 
-export default err;
+export default err

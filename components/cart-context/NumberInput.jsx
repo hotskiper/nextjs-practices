@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button, Input } from '@mui/material'
 
 const NumberInput = ({ num, setFn }) => {

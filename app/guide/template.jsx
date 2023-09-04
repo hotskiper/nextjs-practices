@@ -1,9 +1,10 @@
-
-const Template = ({children})=>{
-    return <div>
-        <p>template</p>
-        {children}
+const Template = ({ children }) => {
+  return (
+    <div>
+      <p>template</p>
+      {children}
     </div>
+  )
 }
 
-export default Template;
+export default Template

@@ -1,94 +1,90 @@
-"use client";
-import { FormGroup, FormControlLabel, Switch, Button } from "@mui/material";
-import { useEffect, useState } from "react";
-import AddDialog from "@/components/list/Add";
-import { DataGrid } from "@mui/x-data-grid";
+'use client'
+import { FormGroup, FormControlLabel, Switch, Button } from '@mui/material'
+import { useEffect, useState } from 'react'
+import AddDialog from '@/components/list/Add'
+import { DataGrid } from '@mui/x-data-grid'
 
 const Page = () => {
-  const [list, setList] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [pageNo, setPageNo] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
-  const [open, setOpen] = useState(false);
-  const [editType, setEditType] = useState("add");
-  const [editValues, setEditValues] = useState(null);
-
- 
+  const [list, setList] = useState([])
+  const [total, setTotal] = useState(0)
+  const [pageNo, setPageNo] = useState(1)
+  const [pageSize, setPageSize] = useState(5)
+  const [open, setOpen] = useState(false)
+  const [editType, setEditType] = useState('add')
+  const [editValues, setEditValues] = useState(null)
 
   useEffect(() => {
     const fetchGoods = async () => {
       const response = await fetch(`/api/list`, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify({ pageNo, pageSize }),
-      });
-      const data = await response.json();
-      console.log(data);
+      })
+      const data = await response.json()
+      console.log(data)
       const array = data.data.map((item) => {
-        const { _id, ...rest } = item;
-        return { id: _id, ...rest };
-      });
-      setList(array);
-      setTotal(data.total);
-    };
-    fetchGoods();
-  }, [pageSize, pageNo]);
-
-  
+        const { _id, ...rest } = item
+        return { id: _id, ...rest }
+      })
+      setList(array)
+      setTotal(data.total)
+    }
+    fetchGoods()
+  }, [pageSize, pageNo])
 
   const handleClickOpen = () => {
-    setEditType("add");
-    setOpen(true);
-  };
+    setEditType('add')
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleEdit = (e, rowData) => {
-    setEditType("edit");
-    setEditValues(rowData);
-    e.stopPropagation();
-    setOpen(true);
-  };
+    setEditType('edit')
+    setEditValues(rowData)
+    e.stopPropagation()
+    setOpen(true)
+  }
 
   const handleDelete = (id) => {
     const deleteGood = async () => {
       const response = await fetch(`/api/list?id=${id}`, {
-        method: "DELETE",
-      });
+        method: 'DELETE',
+      })
       if (response.ok) {
       }
-    };
-    deleteGood();
-  };
+    }
+    deleteGood()
+  }
 
   const handlePagination = (pageNo, pageSize) => {
-    console.log("page", pageNo, pageSize);
-    setPageNo(pageNo + 1);
-    setPageSize(pageSize);
-  };
+    console.log('page', pageNo, pageSize)
+    setPageNo(pageNo + 1)
+    setPageSize(pageSize)
+  }
 
   const columns = [
-    { field: "name", headerName: "名称", width: 200, sortable: false },
+    { field: 'name', headerName: '名称', width: 200, sortable: false },
     {
-      field: "type",
-      headerName: "分类",
+      field: 'type',
+      headerName: '分类',
       width: 150,
       valueGetter: (params) => {
-        const type = params.value;
+        const type = params.value
         const TYPEMAP = {
-          1: "玩具",
-          2: "衣服",
-          3: "鞋子",
-        };
-        return TYPEMAP[type] || "";
+          1: '玩具',
+          2: '衣服',
+          3: '鞋子',
+        }
+        return TYPEMAP[type] || ''
       },
     },
-    { field: "price", headerName: "价格" },
-    { field: "count", headerName: "数量" },
+    { field: 'price', headerName: '价格' },
+    { field: 'count', headerName: '数量' },
     {
-      field: "id",
-      headerName: "操作",
+      field: 'id',
+      headerName: '操作',
       width: 150,
       sortable: false,
       renderCell: (params) => {
@@ -96,23 +92,23 @@ const Page = () => {
           <>
             <Button
               onClick={(e) => {
-                handleEdit(e, params.row);
+                handleEdit(e, params.row)
               }}
             >
               编辑
             </Button>
             <Button
               onClick={() => {
-                handleDelete(params.row.id);
+                handleDelete(params.row.id)
               }}
             >
               删除
             </Button>
           </>
-        );
+        )
       },
     },
-  ];
+  ]
   return (
     <div className="flex h-full">
       <div className="flex-none  w-full">
@@ -143,14 +139,14 @@ const Page = () => {
             checkboxSelection
             onPaginationModelChange={(model, details) => {
               console.log(model)
-              handlePagination( model.page, model.pageSize);
+              handlePagination(model.page, model.pageSize)
             }}
           />
         </div>
       </div>
       <div className="w-full"></div>
     </div>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

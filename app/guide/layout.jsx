@@ -1,10 +1,12 @@
 // import './guide.css'
 
-const Layout = ({children})=>{
-    return <div className="bg">
-        <p>sublayout</p>
-        {children}
+const Layout = ({ children }) => {
+  return (
+    <div className="bg">
+      <p>sublayout</p>
+      {children}
     </div>
+  )
 }
 
-export default Layout;
+export default Layout
