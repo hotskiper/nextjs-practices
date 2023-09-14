@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import Image from 'next/image'
 import { Checkbox, Button } from '@mui/material'
 import NumberInput from './NumberInput'
@@ -16,7 +15,6 @@ const Item = ({
   checkFn,
 }) => {
   const total = price * count
-
   const setNumFn = (num) => {
     setFn(_id, 'count', num)
   }

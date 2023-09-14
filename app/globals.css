@@ -2,10 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --test-color: red;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,3 +33,4 @@ body {
     @apply py-2 px-4 bg-blue-500 text-white hover:bg-blue-700;
   }
 }
+
