@@ -1,8 +1,7 @@
-'use client'
+// 'use client'
 import './globals.css'
 import Nav from '@/components/Nav'
-import { StyledEngineProvider } from '@mui/material'
-import { SnackbarProvider } from 'notistack'
+import BaseProvider from '@/contexts/base-provider'
 
 export const metadata = {
   title: 'Create Next App',
@@ -11,20 +10,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <StyledEngineProvider injectFirst>
-      <html lang="en">
-        <body className="" id="_next">
-          <SnackbarProvider
-            maxSnack={3}
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          >
-            <div className="min-h-screen">
-              <Nav />
-              {children}
-            </div>
-          </SnackbarProvider>
-        </body>
-      </html>
-    </StyledEngineProvider>
+    <html lang="en">
+      <BaseProvider>
+        <div className="min-h-screen">
+          <Nav />
+          {children}
+        </div>
+      </BaseProvider>
+    </html>
   )
 }
